@@ -1,4 +1,4 @@
-const io = require('socket.io')(80, {
+const io = require('socket.io')(3000, {
     cors: {
       origin: '*',
       methods: ['GET', 'POST'],
@@ -18,12 +18,12 @@ io.on('connection', stream => {
     })
 
     stream.on('send-chat-message', message => {
-        stream.broadcast.emit('chat-message', { message: message, name: users[stream.id] })
+        stream.broadcast.emit('chat-message', { message: message, name: usuarios[stream.id] })
     })
 
     stream.on('disconnect', () => {
-        stream.broadcast.emit('user-disconnected', users[stream.id])
-        delete users[stream.idc]
+        stream.broadcast.emit('user-disconnected', usuarios[stream.id])
+        delete usuarios[stream.idc]
     })
 }) 
 
