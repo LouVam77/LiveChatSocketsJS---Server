@@ -32,7 +32,7 @@ io.on('connection', stream => {
 
     stream.on('disconnect', () => {
         stream.broadcast.emit('user-disconnected', usuarios[stream.id])
-        delete usuarios[stream.idc]
+        delete usuarios[stream.id]
     })
 }) 
 
