@@ -12,6 +12,15 @@ const usuarios = {};
 /* Evento io = socket. Headers. Iterar. SEO*/
 
 io.on('connection', stream => {
+
+    socket.on('wpp-session-on', phoneNumber => {
+        socket.broadcast.emit('wpp-contact-on', phoneNumber)
+    })
+
+    socket.on('send-wpp-message', (message, receptorPhoneNumber) => {
+        socket.broadcast.emit('wpp-message', { message: message, receptorPhoneNumber: receptorPhoneNumber })
+    })
+    
     stream.on('new-user', usuario => {
         usuarios[stream.id] = usuario;
         stream.broadcast.emit('user-connect', usuario)
