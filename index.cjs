@@ -13,11 +13,11 @@ const usuarios = {};
 
 io.on('connection', stream => {
 
-    socket.on('wpp-session-on', phoneNumber => {
+    stream.on('wpp-session-on', phoneNumber => {
         io.emit('wpp-contact-on', phoneNumber)
     })
 
-    socket.on('send-wpp-message', (message, receptorPhoneNumber) => {
+    stream.on('send-wpp-message', (message, receptorPhoneNumber) => {
         io.emit('wpp-message', { message: message, receptorPhoneNumber: receptorPhoneNumber })
     })
     
