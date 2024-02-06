@@ -14,24 +14,24 @@ const usuarios = {};
 io.on('connection', stream => {
 
     socket.on('wpp-session-on', phoneNumber => {
-        socket.broadcast.emit('wpp-contact-on', phoneNumber)
+        io.emit('wpp-contact-on', phoneNumber)
     })
 
     socket.on('send-wpp-message', (message, receptorPhoneNumber) => {
-        socket.broadcast.emit('wpp-message', { message: message, receptorPhoneNumber: receptorPhoneNumber })
+        io.emit('wpp-message', { message: message, receptorPhoneNumber: receptorPhoneNumber })
     })
     
     stream.on('new-user', usuario => {
         usuarios[stream.id] = usuario;
-        stream.broadcast.emit('user-connect', usuario)
+        io.emit('user-connect', usuario)
     })
 
     stream.on('send-chat-message', message => {
-        stream.broadcast.emit('chat-message', { message: message, name: usuarios[stream.id] })
+        io.emit('chat-message', { message: message, name: usuarios[stream.id] })
     })
 
     stream.on('disconnect', () => {
-        stream.broadcast.emit('user-disconnected', usuarios[stream.id])
+        io.emit('user-disconnected', usuarios[stream.id])
         delete usuarios[stream.id]
     })
 }) 
